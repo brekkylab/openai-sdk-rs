@@ -239,10 +239,7 @@ assert_eq!(jsons_str[0]["a"], 1);
 - Include light retries with exponential backoff for 429/5xx/timeouts
 - Be easy to extend for more endpoints later
 
-## Tool calling (Responses)
-
-Supply tools via `ResponsesRequest.tools` with JSON Schema:
-Images:
+## Images:
 
 ```rust
 use openai_sdk_rs::{OpenAI, types::images::{ImageGenerationRequest, ImageResponseFormat}};
@@ -250,14 +247,22 @@ use openai_sdk_rs::{OpenAI, types::images::{ImageGenerationRequest, ImageRespons
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let client = OpenAI::from_env()?;
-    let req = ImageGenerationRequest { model: "gpt-image-1".into(), prompt: "A tiny Rust crab".into(), n: Some(1), size: Some("512x512".into()), response_format: Some(ImageResponseFormat::B64Json) };
+    let req = ImageGenerationRequest { 
+        model: "dall-e-3".into(), 
+        prompt: "A tiny Rust crab".into(), 
+        n: Some(1), 
+        size: Some("1024x1024".into()), 
+        response_format: Some(ImageResponseFormat::B64Json) 
+    };
     let resp = client.images_generate(req).await?;
     println!("variants: {}", resp.data.len());
     Ok(())
 }
 ```
 
-Files:
+## Tool calling (Responses)
+
+Supply tools via `ResponsesRequest.tools` with JSON Schema:
 
 ```rust
 use openai_sdk_rs::OpenAI;
@@ -280,20 +285,22 @@ async fn main() -> anyhow::Result<()> {
 ```
 
 ```rust
-use openai_sdk_rs::types::responses::{ResponsesRequest, ToolSpec, FunctionSpec};
+use openai_sdk_rs::types::responses::{ResponsesRequest, ToolSpec};
+use serde_json::json;
 
 let req = ResponsesRequest {
     model: "gpt-4o-mini".into(),
-    input: Some(serde_json::json!("What's the weather in SF?")),
-    tools: Some(vec![ToolSpec::Function { function: FunctionSpec {
-        name: "get_weather".into(),
-        description: Some("Get weather by city".into()),
-        parameters: Some(serde_json::json!({
+    input: Some(json!("What's the weather in SF?")),
+    tools: Some(vec![ToolSpec {
+        type_: "function".to_string(),
+        name: "get_weather".to_string(),
+        description: Some("Get weather by city".to_string()),
+        parameters: Some(json!({
             "type": "object",
             "properties": {"city": {"type": "string"}},
             "required": ["city"],
         })),
-    }}]),
+    }]),
     ..Default::default()
 };
 
