@@ -50,25 +50,21 @@
 //! let client = OpenAI::from_env()?;
 //!
 //! let tools = vec![ToolSpec {
-//!     r#type: "function".to_string(),
-//!     function: json!({
-//!         "name": "get_weather",
-//!         "description": "Get current weather",
-//!         "parameters": {
-//!             "type": "object",
-//!             "properties": {
-//!                 "location": {"type": "string", "description": "City name"}
-//!             },
-//!             "required": ["location"]
-//!         }
-//!     }),
+//!     type_: "function".to_string(),
+//!     name: "get_weather".to_string(),
+//!     description: Some("Get current weather".to_string()),
+//!     parameters: Some(json!({
+//!         "type": "object",
+//!         "properties": {
+//!             "location": {"type": "string", "description": "City name"}
+//!         },
+//!         "required": ["location"]
+//!     })),
 //! }];
 //!
 //! let req = ResponsesRequest {
 //!     model: "gpt-4o-2024-12-17".to_string(),
-//!     messages: vec![
-//!         json!({"role": "user", "content": "What's the weather in Tokyo?"})
-//!     ],
+//!     input: Some(json!("What's the weather in Tokyo?")),
 //!     tools: Some(tools),
 //!     ..Default::default()
 //! };
