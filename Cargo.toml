@@ -1,0 +1,26 @@
+[package]
+name = "openai-sdk"
+version = "0.1.0"
+edition = "2021"
+description = "Simple, async OpenAI API client for Rust (Chat Completions + Embeddings)."
+license = "MIT OR Apache-2.0"
+repository = "https://example.com/openai-sdk-rs"
+keywords = ["openai", "api", "chat", "embeddings", "client"]
+categories = ["api-bindings", "asynchronous", "web-programming"]
+readme = "README.md"
+
+[dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["json", "gzip", "brotli", "rustls-tls", "stream", "multipart"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+url = "2"
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+futures-core = "0.3"
+async-stream = "0.3"
+dotenv = "0.15"
+
+[dev-dependencies]
+anyhow = "1"
+wiremock = { version = "0.6" }

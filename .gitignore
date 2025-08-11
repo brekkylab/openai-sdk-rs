@@ -1,0 +1,22 @@
+# Rust build artifacts
+target/
+
+# Cargo lockfile (omit for libraries)
+Cargo.lock
+
+# IDE/editor
+.idea/
+.vscode/
+*.iml
+
+# macOS
+.DS_Store
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
