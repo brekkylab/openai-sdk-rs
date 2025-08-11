@@ -17,7 +17,7 @@ pub struct ApiErrorEnvelope {
 
 #[derive(Debug, ThisError)]
 pub enum Error {
-    #[error("missing API key; set OPENAI_API_KEY or pass explicitly")] 
+    #[error("missing API key; set OPENAI_API_KEY or pass explicitly")]
     MissingApiKey,
 
     #[error("http error: {0}")]

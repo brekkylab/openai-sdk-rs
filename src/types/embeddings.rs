@@ -4,7 +4,8 @@ use serde::{Deserialize, Serialize};
 pub struct EmbeddingsRequest {
     pub model: String,
     pub input: EmbeddingInput,
-    #[serde(skip_serializing_if = "Option::is_none")] pub user: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub user: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -14,9 +15,21 @@ pub enum EmbeddingInput {
     Strings(Vec<String>),
 }
 
-impl From<String> for EmbeddingInput { fn from(s: String) -> Self { EmbeddingInput::String(s) } }
-impl<'a> From<&'a str> for EmbeddingInput { fn from(s: &'a str) -> Self { EmbeddingInput::String(s.to_string()) } }
-impl From<Vec<String>> for EmbeddingInput { fn from(v: Vec<String>) -> Self { EmbeddingInput::Strings(v) } }
+impl From<String> for EmbeddingInput {
+    fn from(s: String) -> Self {
+        EmbeddingInput::String(s)
+    }
+}
+impl<'a> From<&'a str> for EmbeddingInput {
+    fn from(s: &'a str) -> Self {
+        EmbeddingInput::String(s.to_string())
+    }
+}
+impl From<Vec<String>> for EmbeddingInput {
+    fn from(v: Vec<String>) -> Self {
+        EmbeddingInput::Strings(v)
+    }
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EmbeddingsResponse {
@@ -38,4 +51,3 @@ pub struct EmbeddingsUsage {
     pub prompt_tokens: u32,
     pub total_tokens: u32,
 }
-

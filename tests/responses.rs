@@ -1,4 +1,4 @@
-use openai_sdk_rs::types::responses::{ResponsesResponse, ResponseStreamEvent};
+use openai_sdk_rs::types::responses::{ResponseStreamEvent, ResponsesResponse};
 
 #[test]
 fn extract_function_calls_from_response() {
@@ -41,4 +41,3 @@ fn output_json_parses_text() {
     let j = resp.output_json().unwrap();
     assert_eq!(j["ok"], true);
 }
-

@@ -1,9 +1,15 @@
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::Duration;
 
-use openai_sdk_rs::{OpenAI, types::{embeddings::{EmbeddingsRequest, EmbeddingInput}, responses::ResponsesRequest}};
-use wiremock::{MockServer, Mock, ResponseTemplate};
+use openai_sdk_rs::{
+    types::{
+        embeddings::{EmbeddingInput, EmbeddingsRequest},
+        responses::ResponsesRequest,
+    },
+    OpenAI,
+};
 use wiremock::matchers::{method, path};
+use wiremock::{Mock, MockServer, ResponseTemplate};
 
 static ATTEMPTS: AtomicUsize = AtomicUsize::new(0);
 
@@ -28,11 +34,11 @@ async fn retries_until_success() {
     ATTEMPTS.store(0, Ordering::SeqCst); // Reset counter
 
     // Dynamic responder: 2x 500 then 200
-    Mock::given(method("POST")).and(path("/v1/embeddings"))
+    Mock::given(method("POST"))
+        .and(path("/v1/embeddings"))
         .respond_with(dynamic_response)
         .mount(&server)
         .await;
-
 
     let base = format!("{}/v1/", server.uri());
     let client = OpenAI::builder()
@@ -43,7 +49,11 @@ async fn retries_until_success() {
         .build()
         .unwrap();
 
-    let req = EmbeddingsRequest { model: "text-embedding-3-small".into(), input: EmbeddingInput::from("hi"), user: None };
+    let req = EmbeddingsRequest {
+        model: "text-embedding-3-small".into(),
+        input: EmbeddingInput::from("hi"),
+        user: None,
+    };
     let resp = client.embeddings(req).await.unwrap();
     assert_eq!(resp.data.len(), 1);
     assert!(ATTEMPTS.load(Ordering::SeqCst) >= 3);
@@ -51,7 +61,6 @@ async fn retries_until_success() {
 
 #[tokio::test]
 async fn sse_streaming_responses() {
-
     let server = MockServer::start().await;
 
     // 修复SSE响应格式，添加必需的type字段
@@ -59,10 +68,13 @@ async fn sse_streaming_responses() {
 data: {\"type\":\"content\",\"output_text\":\"world\"}\n\n\
 data: [DONE]\n";
 
-    Mock::given(method("POST")).and(path("/v1/responses"))
-        .respond_with(ResponseTemplate::new(200)
-            .set_body_string(body)
-            .insert_header("content-type", "text/event-stream"))
+    Mock::given(method("POST"))
+        .and(path("/v1/responses"))
+        .respond_with(
+            ResponseTemplate::new(200)
+                .set_body_string(body)
+                .insert_header("content-type", "text/event-stream"),
+        )
         .mount(&server)
         .await;
 
@@ -72,12 +84,12 @@ data: [DONE]\n";
         .base_url(base)
         .build()
         .unwrap();
-   let r = ResponsesRequest::text("gpt-4o-mini", "irrelevant");
-   match client.responses_stream_text(r).await{
+    let r = ResponsesRequest::text("gpt-4o-mini", "irrelevant");
+    match client.responses_stream_text(r).await {
         Ok(text) => {
             println!("{}", text);
             assert_eq!(text, "hello world");
-        },
+        }
         Err(e) => panic!("Failed to stream responses: {}", e),
     }
 }

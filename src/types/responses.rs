@@ -210,7 +210,7 @@ fn collect_text(v: &serde_json::Value, out: &mut String) {
     match v {
         serde_json::Value::String(s) => {
             if !out.is_empty() {
-                out.push_str("\n");
+                out.push('\n');
             }
             out.push_str(s);
         }
