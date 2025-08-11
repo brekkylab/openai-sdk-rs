@@ -1,4 +1,7 @@
-use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+use openai_sdk_rs::{
+    types::chat::{ChatCompletionRequest, ChatMessage},
+    OpenAI,
+};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -17,4 +20,3 @@ async fn main() -> anyhow::Result<()> {
     println!("{}", resp.first_choice_text().unwrap_or("<no text>"));
     Ok(())
 }
-

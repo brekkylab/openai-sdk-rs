@@ -1,5 +1,8 @@
-use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 use futures_util::TryStreamExt;
+use openai_sdk_rs::{
+    types::chat::{ChatCompletionRequest, ChatMessage},
+    OpenAI,
+};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -16,11 +19,14 @@ async fn main() -> anyhow::Result<()> {
 
     let mut stream = client.chat_completion_stream(req).await?;
     while let Some(chunk) = stream.try_next().await? {
-        if let Some(text) = chunk.choices.get(0).and_then(|c| c.delta.content.as_deref()) {
+        if let Some(text) = chunk
+            .choices
+            .get(0)
+            .and_then(|c| c.delta.content.as_deref())
+        {
             print!("{}", text);
         }
     }
     println!();
     Ok(())
 }
-
