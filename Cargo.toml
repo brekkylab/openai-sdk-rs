@@ -1,6 +1,6 @@
 [package]
 name = "openai-sdk-rs"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Unofficial, minimal async OpenAI API client for Rust with support for Chat Completions, Embeddings, Responses API, and tool calling."
 license = "MIT OR Apache-2.0"

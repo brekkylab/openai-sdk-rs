@@ -14,6 +14,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation deployment
 - Code coverage reporting
 
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.2] - 2025-08-11
+
+### Added
+- Complete CI/CD pipeline with GitHub Actions
+- Multi-platform testing (Ubuntu, Windows, macOS)  
+- Automated security auditing with cargo-audit
+- Code coverage reporting with codecov
+- Automated documentation generation and deployment
+- Dependency monitoring workflow
+
+### Fixed
+- Clippy warnings and code formatting issues
+- Deprecated actions-rs/audit replaced with direct cargo audit
+
 ## [0.1.1] - 2025-08-11
 
 ### Fixed
