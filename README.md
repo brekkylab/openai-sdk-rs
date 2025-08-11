@@ -1,6 +1,12 @@
 # openai-sdk
 
-Minimal, async OpenAI API client for Rust.
+[![Crates.io](https://img.shields.io/crates/v/openai-sdk.svg)](https://crates.io/crates/openai-sdk)
+[![Documentation](https://docs.rs/openai-sdk/badge.svg)](https://docs.rs/openai-sdk)
+[![License](https://img.shields.io/crates/l/openai-sdk.svg)](https://github.com/neeboo/openai-sdk-rs#license)
+
+**Unofficial**, minimal, async OpenAI API client for Rust.
+
+> ⚠️ **Disclaimer**: This is an **unofficial** implementation and is not affiliated with OpenAI. Use at your own discretion.
 
 ## ✨ Features
 
@@ -61,7 +67,31 @@ To use a proxy-compatible base URL:
 export OPENAI_BASE_URL=https://api.openai.com/v1
 ```
 
-## Usage
+## 📦 Installation
+
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+openai-sdk = "0.1.0"
+tokio = { version = "1.0", features = ["full"] }
+```
+
+Or install via cargo:
+
+```bash
+cargo add openai-sdk
+```
+
+## 🚀 Quick Start
+
+You'll need an OpenAI API key. Set it as an environment variable:
+
+```bash
+export OPENAI_API_KEY="your-api-key-here"
+```
+
+## 🔧 Usage Examples
 
 Chat:
 
