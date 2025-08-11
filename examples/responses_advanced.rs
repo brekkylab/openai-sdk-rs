@@ -1,4 +1,4 @@
-use openai_sdk::{types::responses::ResponsesRequest, OpenAI};
+use openai_sdk_rs::{types::responses::ResponsesRequest, OpenAI};
 use serde_json::json;
 
 #[tokio::main]

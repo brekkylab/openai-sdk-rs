@@ -1,4 +1,4 @@
-//! # openai-sdk
+//! # openai-sdk-rs
 //!
 //! **Unofficial**, minimal, async OpenAI API client for Rust.
 //!
@@ -18,7 +18,7 @@
 //! ## Quick Start
 //!
 //! ```no_run
-//! use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+//! use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 //!
 //! # #[tokio::main]
 //! # async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -42,7 +42,7 @@
 //! ## Tool Calling Example
 //!
 //! ```no_run
-//! use openai_sdk::{OpenAI, types::responses::{ResponsesRequest, ToolSpec}};
+//! use openai_sdk_rs::{OpenAI, types::responses::{ResponsesRequest, ToolSpec}};
 //! use serde_json::json;
 //!
 //! # #[tokio::main]

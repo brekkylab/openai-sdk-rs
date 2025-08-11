@@ -1,4 +1,4 @@
-use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 use futures_util::TryStreamExt;
 
 #[tokio::main]

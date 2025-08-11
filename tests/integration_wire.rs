@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::Duration;
 
-use openai_sdk::{OpenAI, types::{embeddings::{EmbeddingsRequest, EmbeddingInput}, responses::ResponsesRequest}};
+use openai_sdk_rs::{OpenAI, types::{embeddings::{EmbeddingsRequest, EmbeddingInput}, responses::ResponsesRequest}};
 use wiremock::{MockServer, Mock, ResponseTemplate};
 use wiremock::matchers::{method, path};
 

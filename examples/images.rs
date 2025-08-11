@@ -1,4 +1,4 @@
-use openai_sdk::{
+use openai_sdk_rs::{
     types::images::{ImageGenerationRequest, ImageResponseFormat},
     OpenAI,
 };

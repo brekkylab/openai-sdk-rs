@@ -1,5 +1,5 @@
 use futures_util::TryStreamExt;
-use openai_sdk::{
+use openai_sdk_rs::{
     types::responses::{ResponsesRequest, StreamOptions},
     OpenAI,
 };

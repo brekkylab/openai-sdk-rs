@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use openai_sdk::OpenAI;
+use openai_sdk_rs::OpenAI;
 
 #[tokio::test]
 async fn retry_delay_grows_exponentially() {

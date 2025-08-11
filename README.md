@@ -1,8 +1,8 @@
-# openai-sdk
+# openai-sdk-rs
 
-[![Crates.io](https://img.shields.io/crates/v/openai-sdk.svg)](https://crates.io/crates/openai-sdk)
-[![Documentation](https://docs.rs/openai-sdk/badge.svg)](https://docs.rs/openai-sdk)
-[![License](https://img.shields.io/crates/l/openai-sdk.svg)](https://github.com/neeboo/openai-sdk-rs#license)
+[![Crates.io](https://img.shields.io/crates/v/openai-sdk-rs.svg)](https://crates.io/crates/openai-sdk-rs)
+[![Documentation](https://docs.rs/openai-sdk-rs/badge.svg)](https://docs.rs/openai-sdk-rs)
+[![License](https://img.shields.io/crates/l/openai-sdk-rs.svg)](https://github.com/neeboo/openai-sdk-rs#license)
 
 **Unofficial**, minimal, async OpenAI API client for Rust.
 
@@ -41,13 +41,13 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-openai-sdk = { path = "." }
+openai-sdk-rs = { path = "." }
 ```
 
 Or once published:
 
 ```toml
-openai-sdk = "0.1"
+openai-sdk-rs = "0.1"
 ```
 
 ## Configure
@@ -73,14 +73,14 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-openai-sdk = "0.1.0"
+openai-sdk-rs = "0.1.0"
 tokio = { version = "1.0", features = ["full"] }
 ```
 
 Or install via cargo:
 
 ```bash
-cargo add openai-sdk
+cargo add openai-sdk-rs
 ```
 
 ## 🚀 Quick Start
@@ -96,7 +96,7 @@ export OPENAI_API_KEY="your-api-key-here"
 Chat:
 
 ```rust
-use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -120,7 +120,7 @@ async fn main() -> anyhow::Result<()> {
 Embeddings:
 
 ```rust
-use openai_sdk::{OpenAI, types::embeddings::{EmbeddingsRequest, EmbeddingInput}};
+use openai_sdk_rs::{OpenAI, types::embeddings::{EmbeddingsRequest, EmbeddingInput}};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -135,7 +135,7 @@ async fn main() -> anyhow::Result<()> {
 Streaming chat:
 
 ```rust
-use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 use futures_util::TryStreamExt;
 
 #[tokio::main]
@@ -156,7 +156,7 @@ async fn main() -> anyhow::Result<()> {
 Responses API:
 
 ```rust
-use openai_sdk::{OpenAI, types::responses::ResponsesRequest};
+use openai_sdk_rs::{OpenAI, types::responses::ResponsesRequest};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -170,7 +170,7 @@ async fn main() -> anyhow::Result<()> {
 Streaming Responses:
 
 ```rust
-use openai_sdk::{OpenAI, types::responses::{ResponsesRequest, StreamOptions}};
+use openai_sdk_rs::{OpenAI, types::responses::{ResponsesRequest, StreamOptions}};
 use futures_util::TryStreamExt;
 
 #[tokio::main]
@@ -191,7 +191,7 @@ async fn main() -> anyhow::Result<()> {
 Aggregated streaming helpers:
 
 ```rust
-use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}, types::responses::ResponsesRequest};
+use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}, types::responses::ResponsesRequest};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -216,7 +216,7 @@ async fn main() -> anyhow::Result<()> {
 SSE helper utilities:
 
 ```rust
-use openai_sdk::sse::{extract_data_lines_from_bytes, extract_json_values_from_bytes, extract_data_lines_from_str, try_extract_json_values_from_str};
+use openai_sdk_rs::sse::{extract_data_lines_from_bytes, extract_json_values_from_bytes, extract_data_lines_from_str, try_extract_json_values_from_str};
 
 let raw = b"data: {\"a\":1}\n\n:data comment\n\ndata: [DONE]\n";
 let lines = extract_data_lines_from_bytes(raw);
@@ -245,7 +245,7 @@ Supply tools via `ResponsesRequest.tools` with JSON Schema:
 Images:
 
 ```rust
-use openai_sdk::{OpenAI, types::images::{ImageGenerationRequest, ImageResponseFormat}};
+use openai_sdk_rs::{OpenAI, types::images::{ImageGenerationRequest, ImageResponseFormat}};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -260,7 +260,7 @@ async fn main() -> anyhow::Result<()> {
 Files:
 
 ```rust
-use openai_sdk::OpenAI;
+use openai_sdk_rs::OpenAI;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -280,7 +280,7 @@ async fn main() -> anyhow::Result<()> {
 ```
 
 ```rust
-use openai_sdk::types::responses::{ResponsesRequest, ToolSpec, FunctionSpec};
+use openai_sdk_rs::types::responses::{ResponsesRequest, ToolSpec, FunctionSpec};
 
 let req = ResponsesRequest {
     model: "gpt-4o-mini".into(),
@@ -324,7 +324,7 @@ If you need full control over HTTP behavior (proxies, pools, TLS, UA), inject yo
 
 ```rust
 use std::time::Duration;
-use openai_sdk::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
+use openai_sdk_rs::{OpenAI, types::chat::{ChatMessage, ChatCompletionRequest}};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {

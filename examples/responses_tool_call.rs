@@ -1,4 +1,4 @@
-use openai_sdk::{
+use openai_sdk_rs::{
     types::responses::{ResponsesRequest, ToolSpec},
     OpenAI,
 };
