@@ -23,6 +23,45 @@ Not a full mirror of the API yet — intentionally small and focused.
 
 ## 🚀 Quick Start
 
+### Installation
+
+Add to your `Cargo.toml`:
+
+```toml
+[dependencies]
+openai-sdk-rs = "0.1"
+```
+
+### Basic Usage
+
+## 🛠 Development
+
+This project uses automated development workflows optimized for AI assistants and enhanced productivity:
+
+```bash
+# Quick development status overview
+make dev
+
+# Run fast quality checks (format, clippy, compile)
+make quick
+
+# Full test suite
+make test
+
+# Release a new version (automated!)
+./scripts/quick-release.sh patch
+```
+
+### 🤖 AI Assistant Friendly
+
+This project is optimized for GitHub Copilot and coding assistants:
+- Use `make quick` instead of manual `cargo fmt && cargo clippy`
+- Use `./scripts/quick-release.sh patch` instead of manual version bumping
+- Use `./scripts/tasks.sh add "task"` for task tracking
+- VS Code tasks available via Ctrl+Shift+P → "Tasks: Run Task"
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for comprehensive workflow documentation.
+
 ## 📚 Examples
 
 Check out the `examples/` directory for comprehensive usage examples:

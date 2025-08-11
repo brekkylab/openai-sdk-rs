@@ -14,7 +14,7 @@ async fn main() -> anyhow::Result<()> {
         response_format: Some(ImageResponseFormat::Url),
     };
     let resp = client.images_generate(req).await?;
-    if let Some(img) = resp.data.get(0) {
+    if let Some(img) = resp.data.first() {
         if let Some(b64) = &img.b64_json {
             println!("b64 length: {}", b64.len());
         }

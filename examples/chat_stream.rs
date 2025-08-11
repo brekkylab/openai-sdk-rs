@@ -21,7 +21,7 @@ async fn main() -> anyhow::Result<()> {
     while let Some(chunk) = stream.try_next().await? {
         if let Some(text) = chunk
             .choices
-            .get(0)
+            .first()
             .and_then(|c| c.delta.content.as_deref())
         {
             print!("{}", text);

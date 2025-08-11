@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "2.0.0",
+  "context": {
+    "project": {
+      "type": "rust-library",
+      "name": "openai-sdk-rs",
+      "description": "Async Rust SDK for OpenAI API with comprehensive automation tools"
+    },
+    "automation": {
+      "enabled": true,
+      "tools": {
+        "quick_check": "make quick",
+        "full_test": "make test", 
+        "security_audit": "make security",
+        "coverage_report": "make coverage",
+        "release_patch": "./scripts/quick-release.sh patch",
+        "release_minor": "./scripts/quick-release.sh minor",
+        "task_management": "./scripts/tasks.sh",
+        "development_status": "./scripts/tasks.sh status"
+      }
+    },
+    "workflows": {
+      "pre_commit": "make quick",
+      "pre_push": "make test",
+      "release": "./scripts/quick-release.sh patch",
+      "daily_check": "./scripts/tasks.sh status"
+    },
+    "fallbacks": {
+      "simple_check": "./scripts/simple-check.sh",
+      "manual_test": "cargo test --all-features"
+    }
+  },
+  "ai_assistant_hints": {
+    "prefer_automation": true,
+    "suggest_vscode_tasks": true,
+    "use_make_shortcuts": true,
+    "mention_task_management": true
+  },
+  "common_commands": {
+    "development": [
+      "make quick",
+      "make test", 
+      "make dev",
+      "./scripts/tasks.sh status"
+    ],
+    "release": [
+      "./scripts/quick-release.sh patch",
+      "./scripts/quick-release.sh minor",
+      "./scripts/quick-release.sh major"
+    ],
+    "maintenance": [
+      "make security",
+      "make coverage",
+      "./scripts/dev-workflow.sh updates"
+    ]
+  },
+  "vscode_integration": {
+    "tasks_available": true,
+    "shortcuts": {
+      "quick_check": "Ctrl+Shift+P → Tasks: Run Task → 🚀 Quick Check",
+      "full_test": "Ctrl+Shift+P → Tasks: Run Task → 🧪 Full Test Suite",
+      "add_task": "Ctrl+Shift+P → Tasks: Run Task → 📝 Add Task"
+    }
+  }
+}

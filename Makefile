@@ -1,64 +1,106 @@
-.PHONY: help test fmt clippy check examples docs clean audit coverage
+.PHONY: help test fmt clippy check examples docs clean audit coverage dev status quick-release
 
 # Default target
 help:
-	@echo "Available targets:"
-	@echo "  test      - Run all tests"
-	@echo "  fmt       - Format code"
-	@echo "  clippy    - Run clippy lints"
-	@echo "  check     - Type check (fast)"
-	@echo "  examples  - Check examples compile"
-	@echo "  docs      - Generate documentation"
-	@echo "  clean     - Clean build artifacts"
-	@echo "  audit     - Security audit"
-	@echo "  coverage  - Generate test coverage"
-	@echo "  ci        - Run full CI checks locally"
+.PHONY: help test fmt clippy check examples docs clean audit coverage dev status quick security setup release
 
-# Run tests
+# AI Assistant Optimized Development Workflow
+# Use these commands for automated development tasks
+
+# Default target - show AI-friendly help
+help:
+	@echo "🤖 AI Assistant Optimized Commands:"
+	@echo ""
+	@echo "🚀 Quick Development:"
+	@echo "  make quick        - Quick checks (format, lint, compile) ⭐"
+	@echo "  make test         - Full test suite with coverage"
+	@echo "  make dev          - Development status overview"
+	@echo ""
+	@echo "🔒 Quality & Security:"
+	@echo "  make security     - Security audits and vulnerability checks"
+	@echo "  make coverage     - Generate test coverage report"
+	@echo ""
+	@echo "📦 Release Management:"
+	@echo "  make release      - Interactive patch release"
+	@echo "  make setup        - Setup development environment"
+	@echo ""
+	@echo "🎯 Individual Commands:"
+	@echo "  make fmt          - Format code"
+	@echo "  make clippy       - Lint code"
+	@echo "  make check        - Type check (fast)"
+	@echo "  make clean        - Clean build artifacts"
+	@echo ""
+	@echo "💡 Advanced Usage:"
+	@echo "  ./scripts/quick-release.sh [patch|minor|major]"
+	@echo "  ./scripts/tasks.sh add 'Task description'"
+	@echo "  ./scripts/dev-workflow.sh [setup|quick|test|security|coverage]"
+	@echo ""
+	@echo "📋 VS Code Integration:"
+	@echo "  Ctrl+Shift+P → 'Tasks: Run Task' for GUI access"
+
+# 🚀 Quick development check (AI Assistant Recommended)
+quick:
+	@echo "🤖 Running AI-optimized quick check..."
+	@./scripts/simple-check.sh
+
+# 🧪 Full test suite (AI Assistant Recommended)  
 test:
-	cargo test --all-features
-	cargo test --doc
+	@echo "🤖 Running comprehensive test suite..."
+	@./scripts/dev-workflow.sh test
 
-# Format code
-fmt:
-	cargo fmt --all
+# 🔒 Security checks (AI Assistant Recommended)
+security:
+	@echo "🤖 Running security audits..."
+	@./scripts/dev-workflow.sh security
 
-# Run clippy
-clippy:
-	cargo clippy --all-targets --all-features -- -D warnings
-
-# Type check (fast)
-check:
-	cargo check --all-targets --all-features
-
-# Check examples compile
-examples:
-	cargo check --examples
-
-# Generate documentation
-docs:
-	cargo doc --no-deps --open
-
-# Clean build artifacts
-clean:
-	cargo clean
-
-# Security audit
-audit:
-	cargo audit
-
-# Generate test coverage (requires cargo-llvm-cov)
+# 📊 Coverage report (AI Assistant Recommended)
 coverage:
-	cargo llvm-cov --all-features --workspace --html
-	@echo "Coverage report generated in target/llvm-cov/html/index.html"
+	@echo "🤖 Generating coverage report..."
+	@./scripts/dev-workflow.sh coverage
 
-# Run full CI checks locally
-ci: fmt clippy test examples docs audit
-	@echo "All CI checks passed!"
+# 📦 Release management (AI Assistant Recommended)
+release:
+	@echo "🤖 Starting automated release process..."
+	@./scripts/quick-release.sh patch
 
-# Install development tools
+# ⚙️ Development environment setup (AI Assistant Recommended)
+setup:
+	@echo "🤖 Setting up development environment..."
+	@./scripts/dev-workflow.sh setup
+
+# 📋 Development status overview (AI Assistant Recommended)
+dev:
+	@echo "🤖 Checking development status..."
+	@./scripts/tasks.sh status
+
+status: dev
+
+# 🔧 Individual component commands (for specific needs)
+fmt:
+	@echo "Formatting code..."
+	@cargo fmt --all
+
+clippy:
+	@echo "Running clippy lints..."
+	@cargo clippy --all-targets --all-features -- -D warnings
+
+check:
+	@echo "Type checking..."
+	@cargo check --all-targets --all-features
+
+examples:
+	@echo "Checking examples..."
+	@cargo check --examples
+
+docs:
+	@echo "Generating documentation..."
+	@cargo doc --no-deps --open
+
+clean:
+	@echo "Cleaning build artifacts..."
+	@cargo clean
+
+# 🛠️ Tool installation (for setup)
 install-tools:
-	cargo install cargo-audit
-	cargo install cargo-llvm-cov
-	cargo install cargo-outdated
-	cargo install cargo-deny
+	@echo "Installing development tools..."
+	@cargo install cargo-audit cargo-llvm-cov cargo-outdated cargo-deny
