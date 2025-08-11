@@ -43,7 +43,7 @@ quick:
 	@echo "🤖 Running AI-optimized quick check..."
 	@./scripts/simple-check.sh
 
-# 🧪 Full test suite (AI Assistant Recommended)  
+# 🧪 Full test suite (AI Assistant Recommended)
 test:
 	@echo "🤖 Running comprehensive test suite..."
 	@./scripts/dev-workflow.sh test

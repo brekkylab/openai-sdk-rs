@@ -10,13 +10,13 @@ This project is optimized for GitHub Copilot and other coding assistants. The au
 
 ### Quick Commands
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `make quick` | Quick development check | Format, clippy, compile |
-| `make test` | Full test suite | All tests with coverage |
-| `make security` | Security checks | Audit, licenses, vulnerabilities |
-| `make coverage` | Coverage report | Generate HTML coverage report |
-| `make release` | Prepare release | Interactive version bump |
+| Command         | Description             | Usage                            |
+| --------------- | ----------------------- | -------------------------------- |
+| `make quick`    | Quick development check | Format, clippy, compile          |
+| `make test`     | Full test suite         | All tests with coverage          |
+| `make security` | Security checks         | Audit, licenses, vulnerabilities |
+| `make coverage` | Coverage report         | Generate HTML coverage report    |
+| `make release`  | Prepare release         | Interactive version bump         |
 
 ### Development Scripts
 
@@ -75,7 +75,7 @@ This project is optimized for GitHub Copilot and other coding assistants. The au
 
 ### Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 - 🚀 Quick Check
-- 🧪 Full Test Suite  
+- 🧪 Full Test Suite
 - 🔒 Security Check
 - 📊 Coverage Report
 - 📦 Release Patch/Minor
@@ -129,7 +129,7 @@ When working with this project, AI assistants should:
 
 ### Optional (graceful fallbacks)
 - `cargo-audit` - Security auditing
-- `cargo-llvm-cov` - Coverage reporting  
+- `cargo-llvm-cov` - Coverage reporting
 - `cargo-outdated` - Dependency updates
 - `cargo-deny` - License/ban checking
 - `jq` - Enhanced task management

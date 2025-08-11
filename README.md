@@ -286,12 +286,12 @@ use openai_sdk_rs::{OpenAI, types::images::{ImageGenerationRequest, ImageRespons
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let client = OpenAI::from_env()?;
-    let req = ImageGenerationRequest { 
-        model: "dall-e-3".into(), 
-        prompt: "A tiny Rust crab".into(), 
-        n: Some(1), 
-        size: Some("1024x1024".into()), 
-        response_format: Some(ImageResponseFormat::B64Json) 
+    let req = ImageGenerationRequest {
+        model: "dall-e-3".into(),
+        prompt: "A tiny Rust crab".into(),
+        n: Some(1),
+        size: Some("1024x1024".into()),
+        response_format: Some(ImageResponseFormat::B64Json)
     };
     let resp = client.images_generate(req).await?;
     println!("variants: {}", resp.data.len());

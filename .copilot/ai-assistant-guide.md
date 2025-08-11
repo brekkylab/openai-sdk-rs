@@ -10,14 +10,14 @@ This is a Rust OpenAI SDK with comprehensive automation tools. When suggesting c
 
 ### Instead of Manual Commands, Use Automation:
 
-| ❌ Manual Approach | ✅ Automated Approach | Context |
-|-------------------|----------------------|---------|
-| `cargo fmt && cargo clippy` | `make quick` | Pre-commit checks |
-| `cargo test --all-features` | `make test` | Running tests |
-| Manual version bumping | `./scripts/quick-release.sh patch` | Releases |
-| Ad-hoc TODO comments | `./scripts/tasks.sh add "task"` | Task tracking |
-| Manual security checks | `make security` | Security audits |
-| Manual coverage | `make coverage` | Test coverage |
+| ❌ Manual Approach           | ✅ Automated Approach               | Context           |
+| --------------------------- | ---------------------------------- | ----------------- |
+| `cargo fmt && cargo clippy` | `make quick`                       | Pre-commit checks |
+| `cargo test --all-features` | `make test`                        | Running tests     |
+| Manual version bumping      | `./scripts/quick-release.sh patch` | Releases          |
+| Ad-hoc TODO comments        | `./scripts/tasks.sh add "task"`    | Task tracking     |
+| Manual security checks      | `make security`                    | Security audits   |
+| Manual coverage             | `make coverage`                    | Test coverage     |
 
 ### Common AI Assistant Scenarios
 

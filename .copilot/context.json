@@ -10,7 +10,7 @@
       "enabled": true,
       "tools": {
         "quick_check": "make quick",
-        "full_test": "make test", 
+        "full_test": "make test",
         "security_audit": "make security",
         "coverage_report": "make coverage",
         "release_patch": "./scripts/quick-release.sh patch",
@@ -37,22 +37,9 @@
     "mention_task_management": true
   },
   "common_commands": {
-    "development": [
-      "make quick",
-      "make test", 
-      "make dev",
-      "./scripts/tasks.sh status"
-    ],
-    "release": [
-      "./scripts/quick-release.sh patch",
-      "./scripts/quick-release.sh minor",
-      "./scripts/quick-release.sh major"
-    ],
-    "maintenance": [
-      "make security",
-      "make coverage",
-      "./scripts/dev-workflow.sh updates"
-    ]
+    "development": ["make quick", "make test", "make dev", "./scripts/tasks.sh status"],
+    "release": ["./scripts/quick-release.sh patch", "./scripts/quick-release.sh minor", "./scripts/quick-release.sh major"],
+    "maintenance": ["make security", "make coverage", "./scripts/dev-workflow.sh updates"]
   },
   "vscode_integration": {
     "tasks_available": true,

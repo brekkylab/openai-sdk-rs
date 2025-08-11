@@ -6,7 +6,7 @@ When working with this project, AI assistants should recognize these patterns:
 
 ### Files that indicate automation-first project:
 - `Makefile` with emoji-decorated commands
-- `scripts/*.sh` automation scripts  
+- `scripts/*.sh` automation scripts
 - `.vscode/tasks.json` with task definitions
 - `DEVELOPMENT.md` comprehensive guide
 - `.copilot/` directory with AI assistant guides
@@ -14,7 +14,7 @@ When working with this project, AI assistants should recognize these patterns:
 ### Key automation commands to suggest:
 ```bash
 make quick      # Instead of: cargo fmt && cargo clippy
-make test       # Instead of: cargo test --all-features  
+make test       # Instead of: cargo test --all-features
 make security   # Instead of: cargo audit
 make dev        # Instead of: git status (shows much more)
 ```
@@ -29,7 +29,7 @@ I'll run the comprehensive test suite using the project's automation:
 This runs all tests with proper error handling and reporting.
 ```
 
-### User: "Check code quality"  
+### User: "Check code quality"
 ```
 Let me run the automated quality checks:
 `make quick`
@@ -64,7 +64,7 @@ Suggest VS Code tasks for GUI users:
 
 This project prioritizes:
 1. **Automation over manual commands**
-2. **AI assistant discoverability** 
+2. **AI assistant discoverability**
 3. **Consistent workflows**
 4. **Graceful fallbacks**
 
