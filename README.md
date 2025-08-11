@@ -2,15 +2,32 @@
 
 Minimal, async OpenAI API client for Rust.
 
+## ✨ Features
+
 What it covers:
 - Chat Completions: `POST /v1/chat/completions`
 - Embeddings: `POST /v1/embeddings`
 - Streaming for Chat Completions (SSE)
-- Responses API (+ streaming)
+- **Responses API (+ streaming)** - Full support with tool calling
 - Images generation
 - Files list + upload (multipart)
+- **Advanced configurations** - Temperature, max tokens, reasoning, etc.
 
 Not a full mirror of the API yet — intentionally small and focused.
+
+## 🚀 Quick Start
+
+## 📚 Examples
+
+Check out the `examples/` directory for comprehensive usage examples:
+
+- `cargo run --example chat` - Basic chat completion
+- `cargo run --example chat_stream` - Streaming chat
+- `cargo run --example responses` - Basic responses API
+- `cargo run --example responses_stream` - Streaming responses
+- `cargo run --example responses_tool_call` - Tool calling with functions
+- `cargo run --example responses_advanced` - Advanced parameters and configurations
+- `cargo run --example images` - Image generation
 
 ## Install
 
