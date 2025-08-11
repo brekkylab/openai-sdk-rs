@@ -1,10 +1,13 @@
-use openai_sdk::{OpenAI, types::responses::{ResponsesRequest, ToolSpec}};
+use openai_sdk::{
+    types::responses::{ResponsesRequest, ToolSpec},
+    OpenAI,
+};
 use serde_json::json;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let client = OpenAI::from_env()?;
-    
+
     // 定义一个简单的天气查询工具
     let weather_tool = ToolSpec {
         type_: "function".to_string(),
@@ -24,9 +27,9 @@ async fn main() -> anyhow::Result<()> {
                 }
             },
             "required": ["location"]
-        }))
+        })),
     };
-    
+
     // 定义一个计算器工具
     let calculator_tool = ToolSpec {
         type_: "function".to_string(),
@@ -41,42 +44,52 @@ async fn main() -> anyhow::Result<()> {
                 }
             },
             "required": ["expression"]
-        }))
+        })),
     };
-    
+
     // 创建请求，要求使用工具
     let mut req = ResponsesRequest::text(
-        "gpt-4o-mini", 
-        "What's the weather like in Tokyo? Also, what's 25 * 17?"
+        "gpt-4o-mini",
+        "What's the weather like in Tokyo? Also, what's 25 * 17?",
     );
-    
+
     // 添加工具
     req.tools = Some(vec![weather_tool, calculator_tool]);
     req.tool_choice = Some(json!("auto")); // 让模型自动选择是否使用工具
-    
+
     println!("Making request with tool calling...");
     let resp = client.responses(req).await?;
-    
+
     println!("\n=== Response ===");
     println!("ID: {}", resp.id);
     println!("Model: {}", resp.model);
-    
+
     // 检查是否有函数调用
     let function_calls = resp.function_calls();
     if !function_calls.is_empty() {
         println!("\n=== Function Calls ===");
         for (i, call) in function_calls.iter().enumerate() {
             println!("Call #{}: {}", i + 1, call.name);
-            println!("Arguments: {}", serde_json::to_string_pretty(&call.arguments)?);
-            
+            println!(
+                "Arguments: {}",
+                serde_json::to_string_pretty(&call.arguments)?
+            );
+
             // 模拟执行函数调用
             match call.name.as_str() {
                 "get_weather" => {
-                    if let Some(location) = call.arguments.get("location").and_then(|v| v.as_str()) {
-                        let unit = call.arguments.get("unit")
+                    if let Some(location) = call.arguments.get("location").and_then(|v| v.as_str())
+                    {
+                        let unit = call
+                            .arguments
+                            .get("unit")
                             .and_then(|v| v.as_str())
                             .unwrap_or("celsius");
-                        let temp = if unit == "fahrenheit" { "72°F" } else { "22°C" };
+                        let temp = if unit == "fahrenheit" {
+                            "72°F"
+                        } else {
+                            "22°C"
+                        };
                         println!("→ Mock weather result for {}: Sunny, {}", location, temp);
                     }
                 }
@@ -87,7 +100,7 @@ async fn main() -> anyhow::Result<()> {
                             "25 * 17" => 425,
                             "15 * 23" => 345,
                             "2 + 3 * 4" => 14,
-                            _ => 42 // 默认值
+                            _ => 42, // 默认值
                         };
                         println!("→ Calculation result: {} = {}", expr, result);
                     }
@@ -100,7 +113,7 @@ async fn main() -> anyhow::Result<()> {
     } else {
         println!("\nNo function calls in response.");
     }
-    
+
     // 显示文本输出
     if let Some(text) = resp.output_text() {
         println!("\n=== Text Output ===");
@@ -111,6 +124,6 @@ async fn main() -> anyhow::Result<()> {
             println!("{}", serde_json::to_string_pretty(output)?);
         }
     }
-    
+
     Ok(())
 }
