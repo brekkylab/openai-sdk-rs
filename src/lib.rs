@@ -84,9 +84,9 @@
 //! ```
 mod client;
 mod error;
-mod utils;
 pub mod sse;
 pub mod types;
+mod utils;
 
 pub use crate::client::OpenAI;
 pub use crate::error::{ApiError, Error};

@@ -233,6 +233,16 @@ impl ChatMessage {
             tool_call_id: Some(tool_call_id.into()),
         }
     }
+
+    pub fn new_blocks(role: Role, blocks: Vec<ContentBlock>) -> Self {
+        Self {
+            role,
+            content: Some(MessageContent::Blocks { content: blocks }),
+            name: None,
+            tool_calls: None,
+            tool_call_id: None,
+        }
+    }
 }
 
 impl_builder_methods!(
@@ -265,18 +275,17 @@ pub enum ContentBlock {
     #[serde(rename = "text")]
     Text { text: String },
     #[serde(rename = "image_url")]
-    Image {
-        url: String,
-        detail: Option<ImageDetail>,
-    },
+    Image { image_url: ImageUrlContent },
     #[serde(rename = "input_audio")]
-    Audio { data: String, format: AudioFormat },
+    Audio { input_audio: AudioContent },
     #[serde(rename = "file")]
-    File {
-        file_data: Option<String>,
-        file_id: Option<String>,
-        filename: Option<String>,
-    },
+    File { file: FileContent },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct ImageUrlContent {
+    url: String,
+    detail: Option<ImageDetail>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -288,10 +297,61 @@ pub enum ImageDetail {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct AudioContent {
+    data: String,
+    format: AudioFormat,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum AudioFormat {
     Wav,
     Mp3,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct FileContent {
+    file_data: Option<String>,
+    file_id: Option<String>,
+    filename: Option<String>,
+}
+
+impl ContentBlock {
+    pub fn text(text: impl Into<String>) -> Self {
+        Self::Text { text: text.into() }
+    }
+
+    pub fn image(url: impl Into<String>, detail: Option<ImageDetail>) -> Self {
+        Self::Image {
+            image_url: ImageUrlContent {
+                url: url.into(),
+                detail,
+            },
+        }
+    }
+
+    pub fn audio(data: impl Into<String>, format: AudioFormat) -> Self {
+        Self::Audio {
+            input_audio: AudioContent {
+                data: data.into(),
+                format,
+            },
+        }
+    }
+
+    pub fn file(
+        file_data: Option<String>,
+        file_id: Option<String>,
+        filename: Option<String>,
+    ) -> Self {
+        Self::File {
+            file: FileContent {
+                file_data,
+                file_id,
+                filename,
+            },
+        }
+    }
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -351,5 +411,23 @@ pub struct ChatDelta {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reasoning_content: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub tool_calls: Option<Vec<ToolCall>>,
+    pub tool_calls: Option<Vec<ToolCallDelta>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct ToolCallDelta {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub function: Option<ToolCallFunctionDelta>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct ToolCallFunctionDelta {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arguments: Option<String>,
 }
