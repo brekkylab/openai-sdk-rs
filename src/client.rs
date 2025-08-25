@@ -1,7 +1,6 @@
 use std::time::Duration;
 
 use async_stream::try_stream;
-use futures_util::stream::BoxStream;
 use futures_util::{StreamExt, TryStreamExt};
 use reqwest::{header, Client as HttpClient, StatusCode, Url};
 use serde::de::DeserializeOwned;
@@ -12,6 +11,8 @@ use crate::types::embeddings::{EmbeddingsRequest, EmbeddingsResponse};
 use crate::types::files::{FileDeleteResponse, FileListResponse, FileObject};
 use crate::types::images::{ImageGenerationRequest, ImageGenerationResponse};
 use crate::types::responses::{ResponseStreamEvent, ResponsesRequest, ResponsesResponse};
+use crate::utils::sleep;
+use crate::utils::BoxStream;
 
 const DEFAULT_BASE_URL: &str = "https://api.openai.com";
 
@@ -417,7 +418,7 @@ impl OpenAI {
                         let delay =
                             self.retry_delay(attempt, resp.headers().get(header::RETRY_AFTER));
                         attempt += 1;
-                        tokio::time::sleep(delay).await;
+                        sleep(delay).await;
                         continue;
                     }
                     Ok(resp)
@@ -427,7 +428,7 @@ impl OpenAI {
                     if self.is_retryable_error(&e) && attempt < self.max_retries {
                         let delay = self.retry_delay(attempt, None);
                         attempt += 1;
-                        tokio::time::sleep(delay).await;
+                        sleep(delay).await;
                         continue;
                     }
                     Err(Error::Http(e))
@@ -458,7 +459,13 @@ impl OpenAI {
     }
 
     fn is_retryable_error(&self, e: &reqwest::Error) -> bool {
-        e.is_timeout() || e.is_connect() || e.is_request()
+        let mut result = e.is_timeout() || e.is_request();
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            result = result || e.is_connect()
+        }
+        result = result;
+        result
     }
 }
 
@@ -534,14 +541,8 @@ impl OpenAIBuilder {
                 header::HeaderValue::from_static("application/json"),
             );
 
-            let mut http = HttpClient::builder()
-                .default_headers(headers)
-                .gzip(true)
-                .brotli(true);
+            let mut http = HttpClient::builder().default_headers(headers);
 
-            if let Some(t) = self.timeout {
-                http = http.timeout(t);
-            }
             if let Some(ua) = self.user_agent {
                 http = http.user_agent(ua);
             } else {
@@ -551,10 +552,19 @@ impl OpenAIBuilder {
                 ));
             }
 
+            #[cfg(not(target_arch = "wasm32"))]
+            {
+                http = http.gzip(true).brotli(true);
+
+                if let Some(t) = self.timeout {
+                    http = http.timeout(t);
+                }
+
             if let Some(px) = self.proxy {
                 if let Ok(proxy) = reqwest::Proxy::all(px) {
                     http = http.proxy(proxy);
                 }
+            }
             }
 
             http.build()?

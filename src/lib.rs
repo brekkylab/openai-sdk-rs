@@ -82,9 +82,9 @@
 //! ```bash
 //! export OPENAI_API_KEY="your-api-key-here"
 //! ```
-
 mod client;
 mod error;
+mod utils;
 pub mod sse;
 pub mod types;
 

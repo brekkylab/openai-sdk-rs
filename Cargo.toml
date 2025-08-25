@@ -25,17 +25,34 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-reqwest = { version = "0.12", default-features = false, features = ["json", "gzip", "brotli", "rustls-tls", "stream", "multipart"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "stream", "multipart"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "1"
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1", features = ["macros"] }
 url = "2"
 futures-util = { version = "0.3", default-features = false, features = ["std"] }
 futures-core = "0.3"
 async-stream = "0.3"
 dotenv = "0.15"
 
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["gzip", "brotli"] }
+tokio = { version = "1", features = ["rt-multi-thread"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+tokio_with_wasm = { version = "0.8.7", features = ["macros", "time"] }
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+
 [dev-dependencies]
 anyhow = "1"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
 wiremock = { version = "0.6" }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
+web-sys = { version = "0.3", features = [
+    "console"
+] }
