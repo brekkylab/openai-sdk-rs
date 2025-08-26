@@ -13,7 +13,7 @@ pub struct ChatCompletionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub top_p: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub max_tokens: Option<u32>,
+    pub max_completion_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub presence_penalty: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -48,7 +48,7 @@ impl_builder_methods!(
     response_format: ResponseFormat,
     stream: bool,
     stop: Stop,
-    max_tokens: u32,
+    max_completion_tokens: u32,
     presence_penalty: f32,
     frequency_penalty: f32,
     tools: Vec<Tool>,
@@ -65,10 +65,24 @@ pub enum Stop {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
+#[serde(tag = "type")]
 pub enum ResponseFormat {
+    #[serde(rename = "text")]
     Text,
+    #[serde(rename = "json_object")]
     JsonObject,
+    #[serde(rename = "json_schema")]
+    JsonSchema {
+        json_schema: ResponseFormatJSONSchema,
+    },
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
+pub struct ResponseFormatJSONSchema {
+    pub name: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub strict: Option<bool>,
+    pub schema: FunctionParameters,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
@@ -99,6 +113,9 @@ pub struct FunctionParameters {
     pub properties: Option<HashMap<String, Box<JSONSchemaDefine>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub required: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "additionalProperties")]
+    pub additional_properties: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
